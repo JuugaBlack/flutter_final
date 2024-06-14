@@ -38,9 +38,16 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
         foregroundColor: HexColor('#000000'),
         elevation: 1,
         leading: Container(
-          margin: EdgeInsets.only(left: 5),
+          margin: EdgeInsets.only(left: 16),
+          child: Row(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('日常账本'),
+              Icon(Icons.expand_more),
+            ],
+          ),
         ),
-        leadingWidth: 22,
+        leadingWidth: 100,
         centerTitle: true,
         title: TabBar(
           isScrollable: true,

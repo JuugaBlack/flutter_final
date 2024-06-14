@@ -13,7 +13,7 @@ class NestedTabbar extends StatefulWidget {
 class _NestedTabbarState extends State<NestedTabbar>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  int? touchedIndex;
+  int touchedIndex = 0;
 
   @override
   void initState() {
@@ -32,12 +32,12 @@ class _NestedTabbarState extends State<NestedTabbar>
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
+          margin: EdgeInsets.symmetric(vertical: 15),
           child: TabBar(
             isScrollable: true,
             padding: EdgeInsets.zero,
             indicatorPadding: EdgeInsets.only(bottom: 2),
-            labelPadding: EdgeInsets.symmetric(horizontal: 3),
+            labelPadding: EdgeInsets.symmetric(horizontal: 5),
             indicator: BoxDecoration(
               color: HexColor('#54C395'),
               borderRadius: BorderRadius.circular(45),
@@ -161,7 +161,7 @@ class _NestedTabbarState extends State<NestedTabbar>
                     child: ListView(
                       children: [
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 35),
+                          margin: EdgeInsets.symmetric(horizontal: 50),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

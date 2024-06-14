@@ -1,27 +1,26 @@
 import 'package:flutter/widgets.dart';
 
-/// 引导页
-/// `WelcomeModel` 类用于表示引导页的数据模型。
-///
-/// 每个`WelcomeModel`实例包含了引导页展示所需的所有信息，
-/// 如图标、背景图片、标题、副标题及详细内容，以提供统一且清晰的初始化界面给用户。
-///
-/// 参数说明：
-/// - `icon`：[IconData] 类型，表示页面的图标。
-/// - `image`：[String] 类型，表示背景图片的资源路径或URL。
-/// - `title`：[String] 类型，表示页面的主标题。
-/// - `subTitle`：[String] 类型，表示页面的副标题。
-/// - `content`：[String] 类型，表示页面的具体描述内容。
+/// [WelcomeModel] 类用于封装引导页展示的数据模型。
+/// 每个实例代表引导页面上的一个特定视图块，包括图标、背景图片、标题、副标题及详细内容描述。
 class WelcomeModel {
-  IconData icon;
-  String image;
-  String title;
-  String subTitle;
-  String content;
+  /// 图标数据，使用来自`font_awesome_flutter`包的`IconData`来表示。
+  final IconData icon;
 
-  /// 构造函数，用于创建一个具有完整引导信息的数据模型实例。
-  ///
-  /// 所有参数均为必须提供，确保引导页内容的完整性。
+  /// 背景图片的资源路径，通常是项目中的资产文件路径。
+  final String image;
+
+  /// 页面的主标题，简短概括该页面的主题。
+  final String title;
+
+  /// 副标题，进一步阐述或补充主标题信息。
+  final String subTitle;
+
+  /// 内容描述，提供关于该页面更详细的信息或介绍。
+
+  final String content;
+
+  /// 构造函数，用于创建[WelcomeModel]实例。
+  /// 所有参数均为必须参数，确保模型被正确且完整地初始化。
   WelcomeModel({
     required this.icon,
     required this.image,

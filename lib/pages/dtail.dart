@@ -73,7 +73,7 @@ class Dtail extends StatelessWidget {
                                     Text(
                                       '06月',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 21,
                                         color: HexColor('#ffffff'),
                                       ),
                                     ),
@@ -109,7 +109,7 @@ class Dtail extends StatelessWidget {
                                 Text(
                                   '1314.52',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 21,
                                     color: HexColor('#ffffff'),
                                   ),
                                 ),
