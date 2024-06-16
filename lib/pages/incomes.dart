@@ -4,15 +4,14 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:http/http.dart' as http;
 
-class NestedTabbar extends StatefulWidget {
-  NestedTabbar({Key? key}) : super(key: key);
+class Incomes extends StatefulWidget {
+  Incomes({Key? key}) : super(key: key);
 
   @override
-  State<NestedTabbar> createState() => _NestedTabbarState();
+  State<Incomes> createState() => _IncomesState();
 }
 
-class _NestedTabbarState extends State<NestedTabbar>
-    with TickerProviderStateMixin {
+class _IncomesState extends State<Incomes> with TickerProviderStateMixin {
   late TabController _tabController;
   int? touchedIndex;
   Map<String, dynamic>? jsonData;
@@ -26,7 +25,7 @@ class _NestedTabbarState extends State<NestedTabbar>
 
   Future<void> _fetchChartData() async {
     final url =
-        'https://raw.githubusercontent.com/JuugaBlack/data_for_flutter/main/chart.json';
+        'https://raw.githubusercontent.com/JuugaBlack/data_for_flutter/main/incomes.json';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -57,7 +56,7 @@ class _NestedTabbarState extends State<NestedTabbar>
     List<String> weeks = List<String>.from(jsonData!['weeks']);
     Map<String, dynamic> statistics = jsonData!['statistics'];
     List<dynamic> pieChartData = jsonData!['pieChartData'];
-    List<dynamic> expenseRankings = jsonData!['expenseRankings'];
+    List<dynamic> incomeSources = jsonData!['incomeSources'];
 
     return Scaffold(
       body: Column(
@@ -118,11 +117,11 @@ class _NestedTabbarState extends State<NestedTabbar>
               controller: _tabController,
               children: [
                 _buildWeeklyData(
-                    weeks, statistics, pieChartData, expenseRankings),
+                    weeks, statistics, pieChartData, incomeSources),
                 _buildMonthlyData(
-                    weeks, statistics, pieChartData, expenseRankings),
+                    weeks, statistics, pieChartData, incomeSources),
                 _buildYearlyData(
-                    weeks, statistics, pieChartData, expenseRankings),
+                    weeks, statistics, pieChartData, incomeSources),
               ],
             ),
           ),
@@ -132,8 +131,9 @@ class _NestedTabbarState extends State<NestedTabbar>
   }
 
   Widget _buildWeeklyData(List<String> weeks, Map<String, dynamic> statistics,
-      List<dynamic> pieChartData, List<dynamic> expenseRankings) {
+      List<dynamic> pieChartData, List<dynamic> incomeSources) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
           height: 27,
@@ -170,7 +170,7 @@ class _NestedTabbarState extends State<NestedTabbar>
                         ),
                         SizedBox(height: 5),
                         Text(
-                          '平均支出(天)：${statistics['averageExpenditurePerDay']}',
+                          '平均支出(天)：${statistics['averageIncomePerDay']}',
                           style: TextStyle(
                               color: HexColor('#000000'), fontSize: 11),
                         ),
@@ -180,7 +180,7 @@ class _NestedTabbarState extends State<NestedTabbar>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '总收出：${statistics['totalIncome']}',
+                          '总收入：${statistics['totalIncome']}',
                           style: TextStyle(
                               color: HexColor('#000000'), fontSize: 11),
                         ),
@@ -204,56 +204,46 @@ class _NestedTabbarState extends State<NestedTabbar>
                     aspectRatio: 1,
                     child: PieChart(
                       PieChartData(
-                          pieTouchData: PieTouchData(touchCallback:
-                              (FlTouchEvent event, pieTouchResponse) {
-                            setState(() {
-                              if (!event.isInterestedForInteractions ||
-                                  pieTouchResponse == null ||
-                                  pieTouchResponse.touchedSection == null) {
-                                touchedIndex = -1;
-                                return;
-                              }
-                              touchedIndex = pieTouchResponse
-                                  .touchedSection!.touchedSectionIndex;
-                            });
-                          }),
-                          borderData: FlBorderData(
-                            show: false,
-                          ),
-                          sectionsSpace: 0,
-                          centerSpaceRadius: 0,
-                          sections: showingSections(pieChartData)),
+                        pieTouchData: PieTouchData(touchCallback:
+                            (FlTouchEvent event, pieTouchResponse) {
+                          setState(() {
+                            if (!event.isInterestedForInteractions ||
+                                pieTouchResponse == null ||
+                                pieTouchResponse.touchedSection == null) {
+                              touchedIndex = -1;
+                              return;
+                            }
+                            touchedIndex = pieTouchResponse
+                                .touchedSection!.touchedSectionIndex;
+                          });
+                        }),
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        sectionsSpace: 0,
+                        centerSpaceRadius: 0,
+                        sections: showingSections(pieChartData),
+                      ),
                     ),
                   ),
                 ),
               ),
               Column(
-                children: expenseRankings.map((expense) {
+                children: incomeSources.map((income) {
                   return ListTile(
                     leading: CircleAvatar(
                       backgroundColor: HexColor('#F3F3F3'),
                       child: Icon(Icons.home, color: HexColor('#54C395')),
                     ),
                     title: Text(
-                      expense['description'],
+                      income['description'],
                       style:
                           TextStyle(fontSize: 14, color: HexColor('#666666')),
                     ),
-                    subtitle: SizedBox(
-                      height: 6,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: LinearProgressIndicator(
-                          backgroundColor: Color(0xffcccccc),
-                          valueColor: AlwaysStoppedAnimation(Color(0xff54C395)),
-                          value: expense['progress'],
-                        ),
-                      ),
-                    ),
                     trailing: Text(
-                      expense['amount'],
+                      income['amount'],
                       style:
-                          TextStyle(fontSize: 12, color: HexColor('#FF0000')),
+                          TextStyle(fontSize: 12, color: HexColor('#54C395')),
                     ),
                   );
                 }).toList(),
@@ -266,7 +256,7 @@ class _NestedTabbarState extends State<NestedTabbar>
   }
 
   Widget _buildMonthlyData(List<String> weeks, Map<String, dynamic> statistics,
-      List<dynamic> pieChartData, List<dynamic> expenseRankings) {
+      List<dynamic> pieChartData, List<dynamic> incomeSources) {
     return Column(
       children: [
         Container(
@@ -304,7 +294,7 @@ class _NestedTabbarState extends State<NestedTabbar>
                         ),
                         SizedBox(height: 5),
                         Text(
-                          '平均支出(天)：${statistics['averageExpenditurePerDay']}',
+                          '平均支出(天)：${statistics['averageIncomePerDay']}',
                           style: TextStyle(
                               color: HexColor('#000000'), fontSize: 11),
                         ),
@@ -314,7 +304,7 @@ class _NestedTabbarState extends State<NestedTabbar>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '总收出：${statistics['totalIncome']}',
+                          '总收入：${statistics['totalIncome']}',
                           style: TextStyle(
                               color: HexColor('#000000'), fontSize: 11),
                         ),
@@ -338,56 +328,46 @@ class _NestedTabbarState extends State<NestedTabbar>
                     aspectRatio: 1,
                     child: PieChart(
                       PieChartData(
-                          pieTouchData: PieTouchData(touchCallback:
-                              (FlTouchEvent event, pieTouchResponse) {
-                            setState(() {
-                              if (!event.isInterestedForInteractions ||
-                                  pieTouchResponse == null ||
-                                  pieTouchResponse.touchedSection == null) {
-                                touchedIndex = -1;
-                                return;
-                              }
-                              touchedIndex = pieTouchResponse
-                                  .touchedSection!.touchedSectionIndex;
-                            });
-                          }),
-                          borderData: FlBorderData(
-                            show: false,
-                          ),
-                          sectionsSpace: 0,
-                          centerSpaceRadius: 0,
-                          sections: showingSections(pieChartData)),
+                        pieTouchData: PieTouchData(touchCallback:
+                            (FlTouchEvent event, pieTouchResponse) {
+                          setState(() {
+                            if (!event.isInterestedForInteractions ||
+                                pieTouchResponse == null ||
+                                pieTouchResponse.touchedSection == null) {
+                              touchedIndex = -1;
+                              return;
+                            }
+                            touchedIndex = pieTouchResponse
+                                .touchedSection!.touchedSectionIndex;
+                          });
+                        }),
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        sectionsSpace: 0,
+                        centerSpaceRadius: 0,
+                        sections: showingSections(pieChartData),
+                      ),
                     ),
                   ),
                 ),
               ),
               Column(
-                children: expenseRankings.map((expense) {
+                children: incomeSources.map((income) {
                   return ListTile(
                     leading: CircleAvatar(
                       backgroundColor: HexColor('#F3F3F3'),
                       child: Icon(Icons.home, color: HexColor('#54C395')),
                     ),
                     title: Text(
-                      expense['description'],
+                      income['description'],
                       style:
                           TextStyle(fontSize: 14, color: HexColor('#666666')),
                     ),
-                    subtitle: SizedBox(
-                      height: 6,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: LinearProgressIndicator(
-                          backgroundColor: Color(0xffcccccc),
-                          valueColor: AlwaysStoppedAnimation(Color(0xff54C395)),
-                          value: expense['progress'],
-                        ),
-                      ),
-                    ),
                     trailing: Text(
-                      expense['amount'],
+                      income['amount'],
                       style:
-                          TextStyle(fontSize: 12, color: HexColor('#FF0000')),
+                          TextStyle(fontSize: 12, color: HexColor('#54C395')),
                     ),
                   );
                 }).toList(),
@@ -400,7 +380,7 @@ class _NestedTabbarState extends State<NestedTabbar>
   }
 
   Widget _buildYearlyData(List<String> weeks, Map<String, dynamic> statistics,
-      List<dynamic> pieChartData, List<dynamic> expenseRankings) {
+      List<dynamic> pieChartData, List<dynamic> incomeSources) {
     return Column(
       children: [
         Container(
@@ -438,7 +418,7 @@ class _NestedTabbarState extends State<NestedTabbar>
                         ),
                         SizedBox(height: 5),
                         Text(
-                          '平均支出(天)：${statistics['averageExpenditurePerDay']}',
+                          '平均支出(天)：${statistics['averageIncomePerDay']}',
                           style: TextStyle(
                               color: HexColor('#000000'), fontSize: 11),
                         ),
@@ -448,7 +428,7 @@ class _NestedTabbarState extends State<NestedTabbar>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '总收出：${statistics['totalIncome']}',
+                          '总收入：${statistics['totalIncome']}',
                           style: TextStyle(
                               color: HexColor('#000000'), fontSize: 11),
                         ),
@@ -472,56 +452,46 @@ class _NestedTabbarState extends State<NestedTabbar>
                     aspectRatio: 1,
                     child: PieChart(
                       PieChartData(
-                          pieTouchData: PieTouchData(touchCallback:
-                              (FlTouchEvent event, pieTouchResponse) {
-                            setState(() {
-                              if (!event.isInterestedForInteractions ||
-                                  pieTouchResponse == null ||
-                                  pieTouchResponse.touchedSection == null) {
-                                touchedIndex = -1;
-                                return;
-                              }
-                              touchedIndex = pieTouchResponse
-                                  .touchedSection!.touchedSectionIndex;
-                            });
-                          }),
-                          borderData: FlBorderData(
-                            show: false,
-                          ),
-                          sectionsSpace: 0,
-                          centerSpaceRadius: 0,
-                          sections: showingSections(pieChartData)),
+                        pieTouchData: PieTouchData(touchCallback:
+                            (FlTouchEvent event, pieTouchResponse) {
+                          setState(() {
+                            if (!event.isInterestedForInteractions ||
+                                pieTouchResponse == null ||
+                                pieTouchResponse.touchedSection == null) {
+                              touchedIndex = -1;
+                              return;
+                            }
+                            touchedIndex = pieTouchResponse
+                                .touchedSection!.touchedSectionIndex;
+                          });
+                        }),
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        sectionsSpace: 0,
+                        centerSpaceRadius: 0,
+                        sections: showingSections(pieChartData),
+                      ),
                     ),
                   ),
                 ),
               ),
               Column(
-                children: expenseRankings.map((expense) {
+                children: incomeSources.map((income) {
                   return ListTile(
                     leading: CircleAvatar(
                       backgroundColor: HexColor('#F3F3F3'),
                       child: Icon(Icons.home, color: HexColor('#54C395')),
                     ),
                     title: Text(
-                      expense['description'],
+                      income['description'],
                       style:
                           TextStyle(fontSize: 14, color: HexColor('#666666')),
                     ),
-                    subtitle: SizedBox(
-                      height: 6,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: LinearProgressIndicator(
-                          backgroundColor: Color(0xffcccccc),
-                          valueColor: AlwaysStoppedAnimation(Color(0xff54C395)),
-                          value: expense['progress'],
-                        ),
-                      ),
-                    ),
                     trailing: Text(
-                      expense['amount'],
+                      income['amount'],
                       style:
-                          TextStyle(fontSize: 12, color: HexColor('#FF0000')),
+                          TextStyle(fontSize: 12, color: HexColor('#54C395')),
                     ),
                   );
                 }).toList(),
@@ -544,13 +514,14 @@ class _NestedTabbarState extends State<NestedTabbar>
 
       return PieChartSectionData(
         color: HexColor(pieData['color']),
-        value: pieData['value'],
+        value: pieData['value'].toDouble(),
         title: pieData['title'],
         radius: radius,
         titleStyle: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: const Color(0xffffffff)),
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xffffffff),
+        ),
       );
     }).toList();
   }

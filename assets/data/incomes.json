@@ -1,0 +1,55 @@
+{
+  "weeks": [
+    "05.2022",
+    "06.2022",
+    "07.2022",
+    "08.2022",
+    "09.2022",
+    "10.2022",
+    "11.2022"
+  ],
+  "statistics": {
+    "totalIncome": "50000.00",
+    "averageIncomePerDay": "3500.00",
+    "totalExpenditure": "30000.00",
+    "balance": "20000.00"
+  },
+  "pieChartData": [
+    {
+      "color": "#0293ee",
+      "value": 45,
+      "title": "45%",
+      "icon": "assets/svgs/income-icon1.svg"
+    },
+    {
+      "color": "#f8b250",
+      "value": 25,
+      "title": "25%",
+      "icon": "assets/svgs/income-icon2.svg"
+    },
+    {
+      "color": "#845bef",
+      "value": 20,
+      "title": "20%",
+      "icon": "assets/svgs/income-icon3.svg"
+    },
+    {
+      "color": "#13d38e",
+      "value": 10,
+      "title": "10%",
+      "icon": "assets/svgs/income-icon4.svg"
+    }
+  ],
+  "incomeSources": [
+    {
+      "icon": "home",
+      "description": "工资",
+      "amount": "+20000.00"
+    },
+    {
+      "icon": "home",
+      "description": "投资",
+      "amount": "+10000.00"
+    }
+  ]
+}

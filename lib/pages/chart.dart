@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/services.dart';
+import 'package:lime/pages/incomes.dart';
 
 import 'nested_tabbar.dart';
 
@@ -37,7 +38,6 @@ class _ChartState extends State<Chart> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        // toolbarHeight: 27,
         elevation: 1,
         backgroundColor: HexColor('#fafafa'),
         title: Align(
@@ -51,18 +51,24 @@ class _ChartState extends State<Chart> with TickerProviderStateMixin {
               setState(() => {_fontSizeFlage = !_fontSizeFlage})
             },
             tabs: [
-              Text(
-                '支出',
-                style: TextStyle(
-                  fontSize: 17,
-                  color: HexColor('#333333'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  '支出',
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: HexColor('#333333'),
+                  ),
                 ),
               ),
-              Text(
-                '收入',
-                style: TextStyle(
-                  fontSize: 17,
-                  color: HexColor('#333333'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  '收入',
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: HexColor('#333333'),
+                  ),
                 ),
               ),
             ],
@@ -74,9 +80,7 @@ class _ChartState extends State<Chart> with TickerProviderStateMixin {
         controller: _tabController,
         children: [
           NestedTabbar(),
-          Center(
-            child: Text("It's rainy here"),
-          ),
+          Incomes(),
         ],
       ),
     );
