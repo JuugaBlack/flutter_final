@@ -33,7 +33,6 @@ flutter:
     - assets/logo/
     - assets/svgs/
     - assets/videos/
-    - assets/data/chart.json
 # 启动页背景
 flutter_native_splash:
   fullscreen: true
