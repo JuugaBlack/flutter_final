@@ -1,0 +1,57 @@
+{
+  "weeks": [
+    "05.2022",
+    "06.2022",
+    "07.2022",
+    "08.2022",
+    "09.2022",
+    "10.2022",
+    "11.2022"
+  ],
+  "statistics": {
+    "totalExpenditure": "40000.00",
+    "averageExpenditurePerDay": "3000.09",
+    "totalIncome": "40000.00",
+    "balance": "3000.09"
+  },
+  "pieChartData": [
+    {
+      "color": "#0293ee",
+      "value": 40,
+      "title": "40%",
+      "icon": "assets/svgs/ophthalmology-svgrepo-com.svg"
+    },
+    {
+      "color": "#f8b250",
+      "value": 30,
+      "title": "30%",
+      "icon": "assets/svgs/librarian-svgrepo-com.svg"
+    },
+    {
+      "color": "#845bef",
+      "value": 16,
+      "title": "16%",
+      "icon": "assets/svgs/fitness-svgrepo-com.svg"
+    },
+    {
+      "color": "#13d38e",
+      "value": 15,
+      "title": "15%",
+      "icon": "assets/svgs/worker-svgrepo-com.svg"
+    }
+  ],
+  "expenseRankings": [
+    {
+      "icon": "home",
+      "description": "早餐 80%",
+      "progress": 0.8,
+      "amount": "-10￥"
+    },
+    {
+      "icon": "home",
+      "description": "早餐 80%",
+      "progress": 0.8,
+      "amount": "-10￥"
+    }
+  ]
+}
