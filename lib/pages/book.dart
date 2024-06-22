@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       home: Book(),
       debugShowCheckedModeBanner: false,
     );
-  }
+}
 }
 
 class Book extends StatefulWidget {
@@ -51,7 +51,7 @@ class _BookState extends State<Book> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add),// 添加图标
             onPressed: () {
               _showAddDialog(context);
             },
@@ -90,58 +90,69 @@ class _BookState extends State<Book> {
   Widget _buildBookCard(BookItem book) {
     return Card(
       margin: EdgeInsets.all(10),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: () {
-                _changeBookAvatar(context, book);
-              },
-              child: CircleAvatar(
-                radius: 25,
-                backgroundImage: bookAvatar != null
-                    ? FileImage(bookAvatar!) as ImageProvider<Object>
-                    : AssetImage('assets/default_avatar.png') as ImageProvider<Object>,
-                backgroundColor: Colors.grey[200],
-              ),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AccountingDetailPage(book: book),
             ),
-            SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _changeBookAvatar(context, book);
+                },
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundImage: bookAvatar != null
+                      ? FileImage(bookAvatar!) as ImageProvider<Object>
+                      : AssetImage('assets/default_avatar.png') as ImageProvider<Object>,
+                  backgroundColor: Colors.grey[200],
+                ),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(book.name, style: TextStyle(fontSize: 18)),
+                    Text(
+                      book.description.isNotEmpty ? book.description : '暂无简介',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
                 children: [
-                  Text(book.name, style: TextStyle(fontSize: 18)),
-                  Text(
-                    book.description.isNotEmpty ? book.description : '暂无简介',
-                    style: TextStyle(color: Colors.grey),
+                  ElevatedButton(
+                    onPressed: () {
+                      _showEditDialog(context, book);
+                    },
+                    child: Text('编辑'),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      _deleteBook(book);
+                    },
+                    child: Text('删除'),
                   ),
                 ],
               ),
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _showEditDialog(context, book);
-                  },
-                  child: Text('编辑'),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    _deleteBook(book);
-                  },
-                  child: Text('删除'),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+
 
   // 显示添加账本的对话框
   void _showAddDialog(BuildContext context) {
@@ -256,7 +267,6 @@ class _BookState extends State<Book> {
           ),
           TextButton(
             onPressed: () {
-              // 执行实际的导出逻辑
               Navigator.pop(context); // 关闭确认对话框
               _performExport(context);
             },
@@ -269,11 +279,10 @@ class _BookState extends State<Book> {
 
   // 执行导出逻辑
   void _performExport(BuildContext context) {
-    // 在这里执行导出逻辑，比如向服务器发送请求、生成文件等操作
-    // 这里只是一个示例，显示一个SnackBar表示导出中
+    // 显示一个SnackBar表示导出中
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('正在导出中...'), // 替换为实际的导出逻辑
+        content: Text('正在导出中...'), 
       ),
     );
   }
@@ -338,12 +347,12 @@ class _BookState extends State<Book> {
   }
 }
 
-// 账本类
 class BookItem {
   String name;
   String description;
+  List<String> accountingData; // 记账数据
 
-  BookItem({required this.name, required this.description});
+  BookItem({required this.name, required this.description, this.accountingData = const []});
 }
 
 // 搜索账本的代理类
@@ -402,3 +411,75 @@ class BookSearchDelegate extends SearchDelegate<BookItem> {
     );
   }
 }
+
+// 账本详情页面
+class BookDetailPage extends StatelessWidget {
+  final BookItem book;
+
+  BookDetailPage({required this.book});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(book.name),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              book.name,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Text(
+              book.description.isNotEmpty ? book.description : '暂无简介',
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AccountingDetailPage extends StatelessWidget {
+  final BookItem book;
+
+  AccountingDetailPage({required this.book});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${book.name} - 记账详情'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '记账数据:',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                itemCount: book.accountingData.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(book.accountingData[index]),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
