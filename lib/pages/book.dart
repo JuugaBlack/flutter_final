@@ -35,10 +35,11 @@ class _BookState extends State<Book> {
 
   @override
   Widget build(BuildContext context) {
+    // 设置状态栏样式
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: HexColor('#fafafa'),
-      statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-      statusBarBrightness: Brightness.light, // For iOS (dark icons)
+      statusBarIconBrightness: Brightness.dark, // 对于Android（深色图标）
+      statusBarBrightness: Brightness.light, // 对于iOS（深色图标）
     ));
 
     return Scaffold(
@@ -56,9 +57,21 @@ class _BookState extends State<Book> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.file_download), // Export icon
+            icon: Icon(Icons.file_download), // 导出图标
             onPressed: () {
               _exportBooks(context);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.sort), // 排序图标
+            onPressed: () {
+              _showSortDialog(context);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.search), // 搜索图标
+            onPressed: () {
+              showSearch(context: context, delegate: BookSearchDelegate(books));
             },
           ),
         ],
@@ -73,6 +86,7 @@ class _BookState extends State<Book> {
     );
   }
 
+  // 构建账本卡片
   Widget _buildBookCard(BookItem book) {
     return Card(
       margin: EdgeInsets.all(10),
@@ -106,11 +120,22 @@ class _BookState extends State<Book> {
                 ],
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                _showEditDialog(context, book);
-              },
-              child: Text('编辑'),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _showEditDialog(context, book);
+                  },
+                  child: Text('编辑'),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    _deleteBook(book);
+                  },
+                  child: Text('删除'),
+                ),
+              ],
             ),
           ],
         ),
@@ -118,6 +143,7 @@ class _BookState extends State<Book> {
     );
   }
 
+  // 显示添加账本的对话框
   void _showAddDialog(BuildContext context) {
     TextEditingController nameController = TextEditingController();
     TextEditingController descController = TextEditingController();
@@ -164,6 +190,7 @@ class _BookState extends State<Book> {
     );
   }
 
+  // 显示编辑账本的对话框
   void _showEditDialog(BuildContext context, BookItem book) {
     TextEditingController nameController = TextEditingController(text: book.name);
     TextEditingController descController = TextEditingController(text: book.description);
@@ -213,6 +240,7 @@ class _BookState extends State<Book> {
     );
   }
 
+  // 导出账本
   void _exportBooks(BuildContext context) {
     showDialog(
       context: context,
@@ -239,6 +267,7 @@ class _BookState extends State<Book> {
     );
   }
 
+  // 执行导出逻辑
   void _performExport(BuildContext context) {
     // 在这里执行导出逻辑，比如向服务器发送请求、生成文件等操作
     // 这里只是一个示例，显示一个SnackBar表示导出中
@@ -249,6 +278,7 @@ class _BookState extends State<Book> {
     );
   }
 
+  // 更改账本头像
   void _changeBookAvatar(BuildContext context, BookItem book) async {
     final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -259,11 +289,116 @@ class _BookState extends State<Book> {
       });
     }
   }
+
+  // 删除账本
+  void _deleteBook(BookItem book) {
+    setState(() {
+      books.remove(book);
+    });
+  }
+
+  // 显示排序对话框
+  void _showSortDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('选择排序方式'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text('按名称升序'),
+              onTap: () {
+                _sortBooksByName(true);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('按名称降序'),
+              onTap: () {
+                _sortBooksByName(false);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // 按名称排序账本
+  void _sortBooksByName(bool ascending) {
+    setState(() {
+      if (ascending) {
+        books.sort((a, b) => a.name.compareTo(b.name));
+      } else {
+        books.sort((a, b) => b.name.compareTo(a.name));
+      }
+    });
+  }
 }
 
+// 账本类
 class BookItem {
   String name;
   String description;
 
   BookItem({required this.name, required this.description});
+}
+
+// 搜索账本的代理类
+class BookSearchDelegate extends SearchDelegate<BookItem> {
+  final List<BookItem> books;
+
+  BookSearchDelegate(this.books);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    List<BookItem> searchResults = books.where((book) => book.name.toLowerCase().contains(query.toLowerCase())).toList();
+    return _buildBookList(searchResults);
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<BookItem> suggestions = books.where((book) => book.name.toLowerCase().contains(query.toLowerCase())).toList();
+    return _buildBookList(suggestions);
+  }
+
+  // 构建搜索结果或建议列表
+  Widget _buildBookList(List<BookItem> books) {
+    return ListView.builder(
+      itemCount: books.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(books[index].name),
+          subtitle: Text(books[index].description),
+          onTap: () {
+            close(context, books[index]);
+          },
+        );
+      },
+    );
+  }
 }
