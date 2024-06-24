@@ -3,7 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:lime/pages/book.dart';
 import 'package:lime/pages/chart.dart';
 import 'package:lime/pages/dtail.dart';
-import 'package:lime/pages/individual.dart';
+import 'package:lime/pages/individual/individual.dart';
 import 'package:lime/pages/record.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

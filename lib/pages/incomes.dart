@@ -509,7 +509,7 @@ class _IncomesState extends State<Incomes> with TickerProviderStateMixin {
       var pieData = entry.value;
 
       final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 25.0 : 16.0;
+      final double fontSize = isTouched ? 16.0 : 12.0;
       final double radius = isTouched ? 60.0 : 50.0;
 
       return PieChartSectionData(
