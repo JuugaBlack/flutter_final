@@ -102,7 +102,7 @@ class _DtailState extends State<Dtail> {
                                 children: [
                                   Text(header['month'],
                                       style: TextStyle(
-                                          fontSize: 21, color: Colors.white)),
+                                          fontSize: 16, color: Colors.white)),
                                   Icon(Icons.expand_more, color: Colors.white),
                                 ],
                               ),
@@ -122,7 +122,7 @@ class _DtailState extends State<Dtail> {
                               SizedBox(height: 5),
                               Text(header['expense'],
                                   style: TextStyle(
-                                      fontSize: 21, color: Colors.white)),
+                                      fontSize: 16, color: Colors.white)),
                             ],
                           ),
                           Column(

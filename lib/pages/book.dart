@@ -122,7 +122,7 @@ class _BookState extends State<Book> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(book.name, style: TextStyle(fontSize: 18)),
+                    Text(book.name, style: TextStyle(fontSize: 16)),
                     Text(
                       book.description.isNotEmpty ? book.description : '暂无简介',
                       style: TextStyle(color: Colors.grey),
@@ -138,7 +138,7 @@ class _BookState extends State<Book> {
                     },
                     child: Text('编辑'),
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: 8),
                   ElevatedButton(
                     onPressed: () {
                       _deleteBook(book);

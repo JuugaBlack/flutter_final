@@ -103,7 +103,7 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
         foregroundColor: HexColor('#000000'),
         elevation: 1,
         leading: Container(
-          margin: EdgeInsets.only(left: 16),
+          margin: EdgeInsets.only(left: 5),
           child: Row(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -123,14 +123,14 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
             Text(
               '支出',
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 16,
                 color: HexColor('#333333'),
               ),
             ),
             Text(
               '收入',
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 16,
                 color: HexColor('#333333'),
               ),
             ),
@@ -170,9 +170,8 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -187,7 +186,7 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           ),
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
@@ -201,7 +200,7 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           ),
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
@@ -215,7 +214,7 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           ),
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
@@ -235,7 +234,7 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                         children: [
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
@@ -249,7 +248,7 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           ),
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
@@ -263,7 +262,7 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           ),
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -278,7 +277,7 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           ),
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
@@ -384,13 +383,13 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CircleAvatar(
                                   backgroundColor: HexColor('#F3F3F3'),
-                                  child: Icon(Icons.star,
+                                  child: Icon(Icons.monetization_on,
                                       color: HexColor('#54C395')),
                                 ),
                                 Text('工资')
@@ -399,12 +398,12 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           ),
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
                                   backgroundColor: HexColor('#F3F3F3'),
-                                  child: Icon(Icons.star,
+                                  child: Icon(Icons.price_check,
                                       color: HexColor('#54C395')),
                                 ),
                                 Text('奖金')
@@ -413,12 +412,12 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           ),
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
                                   backgroundColor: HexColor('#F3F3F3'),
-                                  child: Icon(Icons.star,
+                                  child: Icon(Icons.handshake,
                                       color: HexColor('#54C395')),
                                 ),
                                 const Text('投资')
@@ -427,12 +426,12 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                           ),
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
                                   backgroundColor: HexColor('#F3F3F3'),
-                                  child: Icon(Icons.star,
+                                  child: Icon(Icons.back_hand,
                                       color: HexColor('#54C395')),
                                 ),
                                 Text('利息')
@@ -447,12 +446,12 @@ class _RecordState extends State<Record> with TickerProviderStateMixin {
                         children: [
                           Container(
                             width: 44,
-                            height: 60,
+                            height: 65,
                             child: Column(
                               children: [
                                 CircleAvatar(
                                   backgroundColor: HexColor('#F3F3F3'),
-                                  child: Icon(Icons.star,
+                                  child: Icon(Icons.work_history,
                                       color: HexColor('#54C395')),
                                 ),
                                 Text('兼职')

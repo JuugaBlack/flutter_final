@@ -14,7 +14,7 @@ class NestedTabbar extends StatefulWidget {
 class _NestedTabbarState extends State<NestedTabbar>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  int? touchedIndex;
+  num? touchedIndex;
   Map<String, dynamic>? jsonData;
 
   @override
@@ -534,24 +534,29 @@ class _NestedTabbarState extends State<NestedTabbar>
   }
 
   List<PieChartSectionData> showingSections(List<dynamic> pieChartData) {
-    return pieChartData.asMap().entries.map((entry) {
-      int i = entry.key;
-      var pieData = entry.value;
+    return pieChartData
+        .asMap()
+        .map<int, PieChartSectionData>((index, data) {
+          final isTouched = index == touchedIndex;
+          final double fontSize = isTouched ? 16 : 12;
+          final double radius = isTouched ? 60 : 50;
+          final value = (data['value'] as num).toDouble();
 
-      final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 25.0 : 16.0;
-      final double radius = isTouched ? 60.0 : 50.0;
-
-      return PieChartSectionData(
-        color: HexColor(pieData['color']),
-        value: pieData['value'],
-        title: pieData['title'],
-        radius: radius,
-        titleStyle: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.bold,
-            color: const Color(0xffffffff)),
-      );
-    }).toList();
+          return MapEntry(
+            index,
+            PieChartSectionData(
+              color: HexColor(data['color']),
+              value: value,
+              title: '${data['value']}%',
+              radius: radius,
+              titleStyle: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+          );
+        })
+        .values
+        .toList();
   }
 }

@@ -9,23 +9,27 @@ class Individual extends StatelessWidget {
       body: Column(
         children: [
           // 用户信息部分
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                // 用户头像
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage:
-                      AssetImage('../../assets//images/user_avatar.png'),
-                ),
-                const SizedBox(width: 16),
-                // 用户昵称
-                const Text(
-                  '我的昵称',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ],
+          Container(
+            margin: const EdgeInsets.only(
+                top: 40, left: 0, right: 16, bottom: 0), // 设置 margin
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  // 用户头像
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage:
+                        AssetImage('../../assets/images/user_avatar.png'),
+                  ),
+                  const SizedBox(width: 16),
+                  // 用户昵称
+                  const Text(
+                    '我的昵称',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
           // 功能列表
