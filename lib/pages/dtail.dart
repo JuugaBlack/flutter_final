@@ -139,7 +139,7 @@ class _DtailState extends State<Dtail> {
                                               fontSize: 11,
                                               color: Colors.white)),
                                       SizedBox(height: 5),
-                                      Text('余额',
+                                      Text('预算余额',
                                           style: TextStyle(
                                               fontSize: 11,
                                               color: Colors.white)),
