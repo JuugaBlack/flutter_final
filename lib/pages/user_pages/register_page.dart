@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lime/common/colors.dart';
-import 'package:lime/widgets/app_text.dart';
-import 'package:lime/widgets/app_text_field.dart';
+import 'package:ufo/common/colors.dart';
+import 'package:ufo/widgets/app_text.dart';
+import 'package:ufo/widgets/app_text_field.dart';
 
 /// 注册页面组件，用于用户创建新账户。
 class RegisterPage extends StatefulWidget {

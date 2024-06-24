@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lime/common/colors.dart';
-import 'package:lime/pages/nav_pages/add_page.dart';
-import 'package:lime/pages/nav_pages/book_page.dart';
-import 'package:lime/pages/nav_pages/chart_page.dart';
-import 'package:lime/pages/nav_pages/home_page.dart';
-import 'package:lime/pages/nav_pages/my_page.dart';
+import 'package:ufo/common/colors.dart';
+import 'package:ufo/pages/nav_pages/add_page.dart';
+import 'package:ufo/pages/nav_pages/book_page.dart';
+import 'package:ufo/pages/nav_pages/chart_page.dart';
+import 'package:ufo/pages/nav_pages/home_page.dart';
+import 'package:ufo/pages/nav_pages/my_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// 底部 Nav 页

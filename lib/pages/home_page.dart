@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:lime/pages/book.dart';
-import 'package:lime/pages/chart.dart';
-import 'package:lime/pages/dtail.dart';
-import 'package:lime/pages/individual/individual.dart';
-import 'package:lime/pages/record.dart';
+import 'package:ufo/pages/book.dart';
+import 'package:ufo/pages/chart.dart';
+import 'package:ufo/pages/dtail.dart';
+import 'package:ufo/pages/individual/individual.dart';
+import 'package:ufo/pages/record.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Home extends StatefulWidget {

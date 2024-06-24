@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lime/config/routes_config.dart';
+import 'package:ufo/config/routes_config.dart';
 
 /// 动态路由生成器，根据传入的路由设置创建并返回相应的页面路由。
 var onGenerateRoute = (RouteSettings settings) {
